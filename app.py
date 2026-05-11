@@ -16,7 +16,6 @@ def extract_video(url):
                 video = res.url
 
         page.on("response", handle)
-
         page.goto(url, timeout=60000)
         page.wait_for_timeout(8000)
 
