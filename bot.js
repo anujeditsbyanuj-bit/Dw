@@ -61,7 +61,6 @@ bot.on("text", async (ctx) => {
 
   } catch (err) {
     if (browser) await browser.close();
-
     await ctx.telegram.editMessageText(
       ctx.chat.id,
       msg.message_id,
