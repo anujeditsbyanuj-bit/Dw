@@ -18,7 +18,7 @@ bot.on("text", async (ctx) => {
   try {
     // 🔥 Flask API call
     const response = await axios.get(
-      "https://yourapp.onrender.com/api?url=" + encodeURIComponent(link)
+      "https://dw-6njd.onrender.com/api?url=" + encodeURIComponent(link)
     );
 
     const video = response.data.url;
