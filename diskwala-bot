@@ -1,0 +1,7 @@
+diskwala-bot/
+│
+├── bot.js          👈 main bot (tera code)
+├── package.json    👈 dependencies
+├── .env            👈 bot token (secure)
+├── .gitignore
+└── README.md       👈 optional
