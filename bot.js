@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Telegraf } = require("telegraf");
-const { chromium } = require("playwright");
+const axios = require("axios");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -15,25 +15,13 @@ bot.on("text", async (ctx) => {
 
   const msg = await ctx.reply("⏳ Processing...");
 
-  let browser;
-
   try {
-    browser = await chromium.launch({ headless: true });
-    const page = await browser.newPage();
+    // 🔥 Flask API call
+    const response = await axios.get(
+      "https://yourapp.onrender.com/api?url=" + encodeURIComponent(link)
+    );
 
-    let video = null;
-
-    page.on("response", (res) => {
-      const url = res.url();
-      if (url.includes(".mp4") || url.includes(".m3u8")) {
-        video = url;
-      }
-    });
-
-    await page.goto(link, { timeout: 60000 });
-    await page.waitForTimeout(8000);
-
-    await browser.close();
+    const video = response.data.url;
 
     if (!video) {
       return ctx.telegram.editMessageText(
@@ -60,12 +48,11 @@ bot.on("text", async (ctx) => {
     );
 
   } catch (err) {
-    if (browser) await browser.close();
     await ctx.telegram.editMessageText(
       ctx.chat.id,
       msg.message_id,
       null,
-      "❌ Error"
+      "❌ Error while fetching video"
     );
   }
 });
