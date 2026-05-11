@@ -57,4 +57,6 @@ bot.on("text", async (ctx) => {
   }
 });
 
-bot.launch();
+bot.launch().then(() => {
+  console.log("Bot started successfully 🚀");
+});
